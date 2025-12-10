@@ -56,6 +56,8 @@ class Board:
                 # Skip the first selection itself
                 # Skip neighbors of the first click
                 if (x, y) == (fx, fy) or (abs(x - fx) <= 1 and abs(y - fy) <= 1):
+                    # reveal the first selection and neighbours
+                    self.grid[y][x].revealed = True
                     continue
 
                 candidates.append((x, y))
