@@ -18,7 +18,7 @@ class Cell:
     def num(self):
         if self.isBomb:
             return 9
-        return sum(1 for neighbor in self.board.neighbors(self) if neighbor.bomb)
+        return sum(1 for neighbor in self.board.neighbors(self) if neighbor.isBomb)
         # adds 1 to total if neighbour is bomb, using neighbours() method to yield all neighbours
 
 
@@ -27,6 +27,7 @@ class Board:
         self.width = width
         self.height = height
         self.bomb_count = bomb_count
+        self.first_selection = first_selection
         self.grid = [
             [Cell(self, x, y) for x in range(width)]
             for y in range(height)
@@ -54,7 +55,7 @@ class Board:
             for x in range(self.width):
 
                 # Skip the first selection itself
-                # Skip neighbors of the first click
+                # Skip neighbors of the first click and reveal them
                 if (x, y) == (fx, fy) or (abs(x - fx) <= 1 and abs(y - fy) <= 1):
                     # reveal the first selection and neighbours
                     self.grid[y][x].revealed = True
@@ -70,13 +71,18 @@ class Board:
             self.grid[y][x].isBomb = True
 
 
-"""
 # testing (have barely tested, may have some oversights or complete errors)
 board1 = Board(10, 10, 15, [2, 3])
 
-t_row = []
+"""
+num_row = []
 for row in board1.grid:
     for tile in row:
-        t_row.append(tile.num)
-    print(t_row)
-    t_row = []"""
+        if tile.revealed:
+            num_row.append(str(tile.num))
+        else:
+            num_row.append('x')
+    print(num_row)
+    num_row = []
+"""
+# todo recursive method for flood fill reveal initial 0
