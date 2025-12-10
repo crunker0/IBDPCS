@@ -17,7 +17,7 @@ class Cell:
     @property
     def num(self):
         if self.isBomb:
-            return -1
+            return 9
         return sum(1 for neighbor in self.board.neighbors(self) if neighbor.bomb)
         # adds 1 to total if neighbour is bomb, using neighbours() method to yield all neighbours
 
@@ -70,5 +70,11 @@ class Board:
 
 """
 # testing (have barely tested, may have some oversights or complete errors)
-board1 = Board(10, 10, 4, [2, 3])
-print(board1.grid[0][0].isBomb)"""
+board1 = Board(10, 10, 15, [2, 3])
+
+t_row = []
+for row in board1.grid:
+    for tile in row:
+        t_row.append(tile.num)
+    print(t_row)
+    t_row = []"""
